@@ -1,0 +1,6 @@
+msg.txt
+tmp
+tmp.txt
+config.ini
+*.pyc
+.vscode
