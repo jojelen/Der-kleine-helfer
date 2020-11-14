@@ -3,6 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
 def send(cfg, content):
     """ Send a simple, stupid, text, UTF-8 mail in Python """
 
@@ -27,7 +28,8 @@ def send(cfg, content):
         msg += "%s: %s\n" % (key, value)
 
     # add contents
-    msg += "\n{}\n".format(content.replace('\n', '<br />'))
+    msg += content
+    #msg += "\n{}\n".format(content.replace('\n', '<br />'))
 
     s = smtplib.SMTP(cfg.get('mail', 'smtp'), cfg.get('mail', 'port'))
 
@@ -42,3 +44,7 @@ def send(cfg, content):
     s.sendmail(headers['From'], headers['To'], msg.encode('utf-8'))
     s.quit()
 
+
+def send_file_as_email(cfg, filePath):
+    with open(filePath, 'rt') as f:
+        send(cfg, f.read())

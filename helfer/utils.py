@@ -2,6 +2,8 @@ import os
 import fnmatch
 import pandas as pd
 import json
+import re
+
 
 def find(pattern, path):
     '''
@@ -13,6 +15,7 @@ def find(pattern, path):
             if fnmatch.fnmatch(name, pattern):
                 result.append(os.path.join(root, name))
     return result
+
 
 def merge_jsons(jsons):
     '''
