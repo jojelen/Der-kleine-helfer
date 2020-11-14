@@ -16,6 +16,10 @@ def print_paragraph(par, f, html):
         par = "<p>{}</p>".format(par)
     print("\n{}".format(par), file=f)
 
+def print_href(par, f, url):
+    if url is not None:
+        par = "<p><a href=\"{}\">{}</a></p>".format(url,par)
+    print("\n{}".format(par), file=f)
 
 def print_header(title, size, f, html):
     if html:
@@ -83,6 +87,9 @@ class CookBook:
     def get_recipe_title(self, idx):
         return self.df.loc[idx, 'recept']
 
+    def get_recipe_url(self, idx):
+        return self.df.loc[idx, 'url']
+
     def combine_ingredients(self, idxs):
         ingredients = []
         for idx, i in enumerate(idxs):
@@ -114,8 +121,9 @@ class CookBook:
 
         print_paragraph(desc, f, html)
         for idx, i in enumerate(idxs):
-            print_paragraph("{}.) {}".format(idx + 1, self.get_recipe_title(i)),
-                            f, html)
+            url = self.get_recipe_url(i) if html else None
+            print_href("{}.) {}".format(idx + 1, self.get_recipe_title(i)),
+                            f, url)
 
         print_paragraph(
             "The ingredients in each recipe are calculated for 2 portions", f, html)
